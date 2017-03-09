@@ -28,10 +28,10 @@ google_analytics: ['UA-32763568', 'mkdocs.org']
 # docs_dir默认值为docs
 # 如果有大量文档, 需要用导航条来按目录来组织你的导航, 可以在pages选项中包含一个额外的字符串来表示导航头部
 pages:
-- [index.md, Home]
-- [about.md, About]
-- [help/guide.md, Help, 'user-guide']
-- [help/yaml.md, Help, 'yaml-language']
+- [index.md, 主页]
+- [help/guide.md, 帮助, '用户指南']
+- [help/yaml.md, 帮助, '用户指南']
+- [about.md, 关于]
 
 # 设置站点主题, 默认值为mkdocs
 theme: readthedocs

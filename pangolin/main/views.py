@@ -11,7 +11,7 @@
 
 from flask import (request, jsonify)
 
-from pangolin import app
+from pangolin import (app, sentry)
 from pangolin.models import (Hosts, db)
 
 
@@ -23,4 +23,11 @@ def index():
     )
     db.session.add(hs_obj)
     db.session.commit()
-    return jsonify(dict(datetime=hs_obj.datetime))
+    return jsonify(
+        dict(
+            datetime=hs_obj.datetime,
+            client=sentry.client.name,
+            site=sentry.client.site,
+            public_dsn=sentry.dsn
+        )
+    )
