@@ -11,7 +11,7 @@
 
 from flask import (request, jsonify)
 
-from pangolin import app
+from pangolin import (app, sentry)
 from pangolin.models import (Hosts, db)
 
 
@@ -33,3 +33,4 @@ def news():
     """ 新闻
     """
     return jsonify(dict(news="???"))
+
