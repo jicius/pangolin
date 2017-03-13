@@ -10,14 +10,18 @@
 """
 
 from flask import (request, jsonify)
+from flask_mail import Message
 
-from pangolin import (app, sentry)
+from pangolin import (app, mail)
+# from pangolin import sentry
 from pangolin.models import (Hosts, db)
 
 
 @app.route('/', methods=['GET'])
 def index():
-    """ 入口地址
+    """ App index
+
+    Index of the program.
     """
     hs_obj = Hosts(
         query=request.url,
@@ -28,9 +32,20 @@ def index():
     return jsonify(dict(datetime=hs_obj.datetime))
 
 
-@app.route('/news', methods=['GET'])
-def news():
-    """ 新闻
+@app.route('/emails', methods=['GET'])
+def emials():
+    """ Send email
+
+    Sending email.
     """
-    return jsonify(dict(news="???"))
+    msg = Message(
+        subject="Hello, world!",
+        body="This is my firsk email sended by Flask Mail.",
+        sender="bq_ji@yahoo.com",
+        recipients=["487834315@qq.com"]
+    )
+    if mail.send(msg):
+        return jsonify(dict(status="Success"))
+    else:
+        return jsonify(dict(status="Fialed"))
 
