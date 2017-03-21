@@ -44,6 +44,13 @@ the Mail class constructor.
     * MAIL_ASCII_ATTACHMENTS: default False
 """
 # email are managed through a Mail instance
+app.config.update(
+    MAIL_SERVER='smtp.qq.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME='2644148694@qq.com',
+    MAIL_PASSWORD='rrkwvmhjukahdjai'
+)
 mail = Mail(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@192.168.1.214/test'

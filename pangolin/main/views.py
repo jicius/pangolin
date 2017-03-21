@@ -11,7 +11,7 @@
 import time
 from functools import wraps
 
-from flask import (request, jsonify)
+from flask import (request, jsonify, render_template)
 from flask_mail import Message
 
 from pangolin import (app, mail)
@@ -39,7 +39,6 @@ def index():
         query=request.url,
         host=request.host
     )
-    print c
     db.session.add(hs_obj)
     db.session.commit()
     return jsonify(dict(datetime=hs_obj.datetime))
@@ -52,13 +51,14 @@ def emails():
     Sending email.
     """
     msg = Message(
-        subject="Hello, world!",
-        body="This is my first email sent by Flask Mail.",
-        sender="bq_ji@yahoo.com",
-        recipients=["487834315@qq.com"]
+        subject=u"数据统计",
+        body=render_template('email.html'),
+        sender=(u"征信运维", "2644148694@qq.com"),            # sender是一个二元组, 将会被分分为姓名和邮件地址
+        recipients=["bq_ji@yahoo.com"]
     )
-    if mail.send(msg):
-        return jsonify(dict(status="Success"))
-    else:
-        return jsonify(dict(status="Failed"))
+    try:
+        mail.send(msg)
+    except Exception as e:
+        return jsonify(dict(Code=-1, state=e))
+    return jsonify(dict(Code=0, state="Ok"))
 
