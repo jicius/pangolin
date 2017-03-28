@@ -9,13 +9,13 @@
 @time: 2017-03-07 
 """
 import time
+import datetime
 from functools import wraps
 
 from flask import (request, jsonify, render_template)
 from flask_mail import Message
 
 from pangolin import (app, mail)
-# from pangolin import sentry
 from pangolin.models import (Hosts, db)
 
 
@@ -44,21 +44,26 @@ def index():
     return jsonify(dict(datetime=hs_obj.datetime))
 
 
-@app.route('/emails', methods=['GET'])
-def emails():
+@app.route('/email', methods=['GET'])
+def email():
     """ Send email
 
     Sending email.
     """
     msg = Message(
-        subject=u"数据统计",
-        body=render_template('email.html'),
-        sender=(u"征信运维", "2644148694@qq.com"),            # sender是一个二元组, 将会被分分为姓名和邮件地址
+        subject=u"数据统计 %s" % str(datetime.date.today()),
+        sender=(u"征信", "2644148694@qq.com"),            # sender是一个二元组, 分别为姓名和邮件地址
         recipients=["bq_ji@yahoo.com"]
     )
+    msg.html = render_template('email.html', title=123456)
     try:
         mail.send(msg)
     except Exception as e:
         return jsonify(dict(Code=-1, state=e))
     return jsonify(dict(Code=0, state="Ok"))
+
+
+# @app.route('/email', methods=['GET'])
+# def email():
+#     return render_template("email.html", title=u"数据统计")
 
