@@ -8,6 +8,7 @@
 @file: views.py
 @time: 2017-03-07 
 """
+
 import time
 from functools import wraps
 
@@ -52,13 +53,27 @@ def emails():
     """
     msg = Message(
         subject=u"数据统计",
-        body=render_template('email.html'),
-        sender=(u"征信运维", "2644148694@qq.com"),            # sender是一个二元组, 将会被分分为姓名和邮件地址
+        body="text body",
+        html=render_template("email.html", datetime=time.ctime()),
+        sender=(u"征信运维", "2644148694@qq.com"),                  # sender是一个二元组, 分别为姓名和邮件地址
         recipients=["bq_ji@yahoo.com"]
     )
     try:
         mail.send(msg)
     except Exception as e:
-        return jsonify(dict(Code=-1, state=e))
-    return jsonify(dict(Code=0, state="Ok"))
+        return jsonify(dict(Code=-1, State=e))
+    return jsonify(dict(Code=0, State="Ok"))
+
+
+@app.route('/proxy_message')
+def proxy():
+    """ Proxy check
+
+    Check proxy type.
+    """
+    return jsonify(dict(
+        remote_addr=request.remote_addr,
+        user_agent=str(request.user_agent),
+        scheme=request.scheme
+    ))
 
