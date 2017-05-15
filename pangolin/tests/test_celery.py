@@ -16,9 +16,3 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from pangolin import app
-
-
-if __name__ == '__main__':
-    # localhost test
-    app.run(host="0.0.0.0", port=8191)
