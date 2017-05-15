@@ -15,3 +15,17 @@
 # 
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import os
+import sys
+
+
+def search(root=None):
+    if not root:
+        dir = os.listdir(os.getcwd())
+    else:
+        dir = os.listdir(root)
+    return dir
+
+if __name__ == '__main__':
+    print search('.')

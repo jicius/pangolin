@@ -27,3 +27,15 @@ class Hosts(db.Model):
 
     def __repr__(self):
         return '<Uid> %s' % self.uid
+
+
+class Users(db.Model):
+    # User message
+    __tablename__ = 'users'
+
+    id = db.Column(db.String(64), primary_key=True, default=str(uuid.uuid4()).replace('-', ''))
+    username = db.Column(db.String(45))
+    email = db.Column(db.String(45))
+
+
+
