@@ -20,5 +20,8 @@ from pangolin import app
 
 
 if __name__ == '__main__':
-    # localhost test
-    app.run(host="0.0.0.0", port=8191)
+    its = app.view_functions.viewitems()
+    for it in its:
+        print it[1].__name__, it[1].func_name, it[1].func_doc
+
+    print app.__dict__['url_map']

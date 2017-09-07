@@ -15,20 +15,3 @@
 # 
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import time
-import random
-
-from raven import Client
-
-
-client = Client('http://ed7a4cdc507f47968ebd88072e3dae44:f62964da28c34a7d9906111f490a9d6f@127.0.0.1:9000/10')
-
-
-if __name__ == '__main__':
-    while True:
-        try:
-            1 / 0
-        except ZeroDivisionError:
-            client.captureException()
-        time.sleep(random.randrange(1,3))

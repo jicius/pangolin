@@ -1,16 +1,22 @@
-#!/usr/bin env python 
-# -*- coding: UTF-8 -*-
-
-"""
-@version: python2.7
-@author: jicius
-@software: PyCharm Community Edition
-@file: views.py
-@time: 2017-03-07 
-"""
+#!/usr/bin/env python
+#   -*- coding: utf-8 -*-
+#
+#   Copyright (C) 2017 Jicius
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import time
-import datetime
 from functools import wraps
 
 from flask import (request, jsonify, render_template)
@@ -43,43 +49,3 @@ def index():
     db.session.add(hs_obj)
     db.session.commit()
     return jsonify(dict(datetime=hs_obj.datetime))
-
-
-@app.route('/email', methods=['GET'])
-def email():
-    """ Send email
-
-    Sending email.
-    """
-    msg = Message(
-        subject=u"数据统计",
-        body="text body",
-        html=render_template("email.html", datetime=time.ctime()),
-        sender=(u"征信运维", "2644148694@qq.com"),                  # sender是一个二元组, 分别为姓名和邮件地址
-        recipients=["bq_ji@yahoo.com"]
-    )
-    msg.html = render_template('email.html', title=123456)
-    try:
-        mail.send(msg)
-    except Exception as e:
-        return jsonify(dict(Code=-1, State=e))
-    return jsonify(dict(Code=0, State="Ok"))
-
-
-@app.route('/proxy_message')
-def proxy():
-    """ Proxy check
-
-    Check proxy type.
-    """
-    return jsonify(dict(
-        remote_addr=request.remote_addr,
-        user_agent=str(request.user_agent),
-        scheme=request.scheme
-    ))
-
-
-# @app.route('/email', methods=['GET'])
-# def email():
-#     return render_template("email.html", title=u"数据统计")
-
